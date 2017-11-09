@@ -45,9 +45,7 @@ class App extends Component {
   }
 
   filterByColor(e) {
-    const cars = this.state.cars.filter( car => {
-      return car.color === e.target.value
-    })
+    const cars = funcs.getByColor(this.state.cars, e.target.value)
     this.setState({
       carsByColor: cars
     })

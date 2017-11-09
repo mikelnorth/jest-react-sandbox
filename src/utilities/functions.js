@@ -7,27 +7,33 @@ module.exports = {
         })
     },
 
-    filterById(cars, id){
+    filterById(cars, id) {
         return cars.filter(car => {
             return car.id == id
         })
     },
 
-    getRandomNum(){
-       let randomNum = Math.floor(Math.random() * 10) + 1
-       return randomNum
+    getByColor(cars, color) {
+        return cars.filter(car => {
+            return car.color == color
+        })
     },
 
-    whoWins(elfAttack, elfHealth, orcAttack, orcHealth){
-        while(elfHealth > 0 || orcHealth > 0) {
+    getRandomNum() {
+        let randomNum = Math.floor(Math.random() * 10) + 1
+        return randomNum
+    },
+
+    whoWins(elfAttack, elfHealth, orcAttack, orcHealth) {
+        while (elfHealth > 0 || orcHealth > 0) {
             orcHealth -= elfAttack;
-            if (orcHealth<= 0) {          
+            if (orcHealth <= 0) {
                 return 'Elf'
             }
             elfHealth -= orcAttack;
             if (elfHealth <= 0) {
-             return "Orc"
+                return "Orc"
             }
-          }
+        }
     }
 }
