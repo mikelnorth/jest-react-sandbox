@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import './App.css';
+const funcs = require('./utilities/functions.js')
+
 
 
 class App extends Component {
@@ -23,19 +25,20 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get('/api/cars').then( data => {
+    // axios.get('/api/cars').then( data => {
+    //   this.setState({
+    //     cars: data.data
+    //   })
+    // })
+    funcs.getCars('/api/cars').then(res => {
       this.setState({
-        cars: data.data
+        cars: res
       })
     })
   }
 
   filterCarsById() {
-    console.log('running')
-    const car = this.state.cars.filter( car => {
-      return car.id === parseInt(this.input.value)
-    })
-    console.log(car)
+   const car = funcs.filterById(this.state.cars, this.input.value)
     this.setState({
       carById: car
     })
@@ -52,7 +55,7 @@ class App extends Component {
 
   randomNum() {
     this.setState({
-      randomNum: Math.floor(Math.random() * 10) + 1
+      randomNum: funcs.getRandomNum()
     })
   }
 
@@ -62,23 +65,12 @@ class App extends Component {
     let elfAttack = parseInt(this.elfA.value);
     let orcAttack = parseInt(this.orcA.value);
     let orcHealth = parseInt(this.orcH.value);
-    while(elfHealth > 0 || orcHealth > 0) {
-      console.log('elf', elfHealth, 'orc', orcHealth)
-      orcHealth -= elfAttack;
-      if (orcHealth<= 0) {
-        this.setState({
-          winner: 'Elf'
-        })
-        return;
-      }
-      elfHealth -= orcAttack;
-      if (elfHealth <= 0) {
-        this.setState({
-          winner: 'Orc'
-        })
-        return;
-      }
-    }
+
+    let winner = funcs.whoWins(elfAttack, elfHealth, orcAttack, orcHealth)
+    console.log(winner)
+    this.setState({
+      winner: winner
+    })
   }
   
   toggleCheck() {
